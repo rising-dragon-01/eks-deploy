@@ -103,8 +103,8 @@ pipeline {
                 // Update Kubernetes deployment manifest with dynamic image tag
                 script {
                     def dockerTag = "${env.BUILD_NUMBER}"
-                    sh "sed -i 's|image: my-docker-image:latest|image: ${ECR_REPO}:${dockerTag}|' main.yml"
-                    sh "kubectl apply -f main.yml"
+                    //sh "sed -i 's|image: my-docker-image:latest|image: ${ECR_REPO}:${dockerTag}|' main.yml"
+                    sh "kubectl apply -f main.yaml"
                 }
             }
         }
