@@ -8,7 +8,7 @@ pipeline {
     environment {
     //   #  DOCKERHUB_CREDENTIALS = credentials('dockerPass')
         AWS_REGION = 'ap-south-1'
-        ECR_REPO = '977098995865.dkr.ecr.ap-south-1.amazonaws.com/test/first'
+        ECR_REPO = '977098995865.dkr.ecr.ap-south-1.amazonaws.com/test/first:latest'
         ECR_REPO_URL = '967822984907.dkr.ecr.ap-south-1.amazonaws.com'
         dockerImage = 'webapp01'
         // DOCKER_CREDENTIALS_ID = credentials('dockerhub')
@@ -90,11 +90,11 @@ pipeline {
                      sh "aws ecr get-login-password --region ${AWS_REGION} | docker login --username AWS --password-stdin ${ECR_REPO_URL}"
                     
                     // Tag the Docker image for ECR
-                        sh "docker tag ${dockerImage}:${dockerTag} ${ECR_REPO}:${dockerTag}"
+                        sh "docker tag ${dockerImage}:${dockerTag} ${ECR_REPO}"
                     
                     // Push the Docker image to ECR
                     //docker push 967822984907.dkr.ecr.ap-south-1.amazonaws.com/kart:latest
-                    sh "docker push ${ECR_REPO}:${dockerTag}"
+                    sh "docker push ${ECR_REPO}"
                 }
             }
         }
