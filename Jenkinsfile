@@ -10,7 +10,7 @@ pipeline {
         AWS_REGION = 'ap-south-1'
         ECR_REPO = '977098995865.dkr.ecr.ap-south-1.amazonaws.com/test/first'
         ECR_REPO_URL = '967822984907.dkr.ecr.ap-south-1.amazonaws.com'
-        dockerImage = 'test/first'
+        dockerImage = 'webapp01'
         // DOCKER_CREDENTIALS_ID = credentials('dockerhub')
     }
     // }
