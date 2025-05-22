@@ -12,7 +12,7 @@ pipeline {
     stages {
         stage('SCM Checkout') {
             steps {
-                git 'https://github.com/dinesh-byte/my-app.git'
+                git 'https://github.com/rising-dragon-01/eks-deploy.git'
             }
         }
 
@@ -23,49 +23,49 @@ pipeline {
             }
         }
 
- //        stage('SonarQube Analysis') {
- //            environment {
- //                // SonarQube server ID must match Jenkins configuration
- //                SONARQUBE_ENV = 'sonar'
- //            }
- //            steps {
- //                withSonarQubeEnv("${SONARQUBE_ENV}") {
- //                    sh 'mvn sonar:sonar'
- //                }
- //            }
- //        }
-	// stage('Quality Gate Check') {
- //            steps {
- //                sleep (60)
- //                timeout(time: 1, unit: 'HOURS') {
- //                    // Wait for the Quality Gate to be computed and check its status
- //               }
- //            }
+        stage('SonarQube Analysis') {
+            environment {
+                // SonarQube server ID must match Jenkins configuration
+                SONARQUBE_ENV = 'sonar'
+            }
+            steps {
+                withSonarQubeEnv("${SONARQUBE_ENV}") {
+                    sh 'mvn sonar:sonar'
+                }
+            }
+        }
+	    stage('Quality Gate Check') {
+            steps {
+                sleep (60)
+                timeout(time: 1, unit: 'HOURS') {
+                    // Wait for the Quality Gate to be computed and check its status
+               }
+            }
         
- //        post {
+        post {
  
- //        failure {
- //            echo 'sending email notification from jenkins'
+        failure {
+            echo 'sending email notification from jenkins'
     
- //                step([$class: 'Mailer',notifyEveryUnstableBuild: true,
- //                recipients: emailextrecipients([[$class: 'CulpritsRecipientProvider'],
- //                [$class: 'RequesterRecipientProvider']])])
- //                }
- //            }
+                step([$class: 'Mailer',notifyEveryUnstableBuild: true,
+                recipients: emailextrecipients([[$class: 'CulpritsRecipientProvider'],
+                [$class: 'RequesterRecipientProvider']])])
+                }
+            }
 
-	// }
- //        stage('Docker Build') {
- //            steps {
- //                script {
- //                    // Define Docker image name and tag
- //                    def dockerTag = "${env.BUILD_NUMBER}"
- //                    // Build and tag the Docker image
- //                    sh "docker build -t webapp01:${dockerTag} ."  
- //                    // Push the Docker image to ECR
- //                    //sh "docker push ${ECR_REPO_URL}:${dockerTag}"
- //                }
- //            }
- //        }
+	}
+        stage('Docker Build') {
+            steps {
+                script {
+                    // Define Docker image name and tag
+                    def dockerTag = "${env.BUILD_NUMBER}"
+                    // Build and tag the Docker image
+                    sh "docker build -t webapp01:${dockerTag} ."  
+                    // Push the Docker image to ECR
+                    //sh "docker push ${ECR_REPO_URL}:${dockerTag}"
+                }
+            }
+        }
         stage('Remove Previous Docker Image') {
             steps {
                 script {
