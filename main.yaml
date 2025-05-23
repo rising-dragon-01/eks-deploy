@@ -19,9 +19,6 @@ spec:
           image: 977098995865.dkr.ecr.ap-south-1.amazonaws.com/test/first:latest
           ports:
             - containerPort: 8080
-          env:
-            - name: JAVA_OPTS
-              value: "-Xms256m -Xmx512m"
 ---
 apiVersion: v1
 kind: Service
