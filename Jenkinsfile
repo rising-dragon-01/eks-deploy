@@ -4,7 +4,6 @@ pipeline {
     tools {
         maven 'maven3'
     }
-
     environment {
     //   #  DOCKERHUB_CREDENTIALS = credentials('dockerPass')
         AWS_REGION = 'ap-south-1'
